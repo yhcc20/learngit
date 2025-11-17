@@ -85,7 +85,7 @@ sequenceDiagram
     participant A3 as 技术匹配专家
     participant A4 as 创新方案设计师
     participant A5 as 可行性分析师
-    participant LLM as GPT-4大模型
+    participant LLM as Deepseek大模型
 
     U->>A1: 输入技术趋势数据
     A1->>LLM: 分析技术趋势
