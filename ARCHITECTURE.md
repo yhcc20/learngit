@@ -4,59 +4,59 @@
 
 ```mermaid
 graph TB
-    subgraph "前端层 Frontend"
-        UI[React 用户界面<br/>EnhancedMeetingPage]
-        Upload[上传音频<br/>选择模板类型]
-        Display[展示分析结果<br/>章节/决策/待办]
+    subgraph Frontend["前端层 Frontend"]
+        UI["React 用户界面<br/>EnhancedMeetingPage"]
+        Upload["上传音频<br/>选择模板类型"]
+        Display["展示分析结果<br/>章节/决策/待办"]
     end
 
-    subgraph "API层 FastAPI"
-        Router[API Router<br/>meetings.py]
-        Upload_EP[POST /upload]
-        Analyze_EP[POST /{id}/analyze]
-        Minutes_EP[GET /{id}/minutes]
-        Catchup_EP[GET /{id}/catchup]
+    subgraph APILayer["API层 FastAPI"]
+        Router["API Router<br/>meetings.py"]
+        UploadAPI["POST /upload<br/>上传音频接口"]
+        AnalyzeAPI["POST /analyze<br/>分析会议接口"]
+        MinutesAPI["GET /minutes<br/>生成纪要接口"]
+        CatchupAPI["GET /catchup<br/>智能补课接口"]
     end
 
-    subgraph "AI处理层"
-        AudioProc[音频处理器<br/>audio_processor]
-        EnhancedCrew[增强版会议分析Crew<br/>enhanced_meeting_crew]
-        TemplateEngine[模板引擎<br/>meeting_templates]
+    subgraph AILayer["AI处理层"]
+        AudioProc["音频处理器<br/>audio_processor"]
+        EnhancedCrew["增强版会议分析Crew<br/>enhanced_meeting_crew"]
+        TemplateEngine["模板引擎<br/>meeting_templates"]
     end
 
-    subgraph "多Agent协作 CrewAI"
-        Agent1[会议结构分析师<br/>Structure Analyst]
-        Agent2[决策识别专家<br/>Decision Expert]
-        Agent3[任务提取专家<br/>Task Extractor]
-        Agent4[说话人观点分析师<br/>Speaker Analyst]
-        Agent5[会议总结专家<br/>Summary Expert]
+    subgraph CrewAI["多Agent协作 CrewAI"]
+        Agent1["会议结构分析师<br/>Structure Analyst"]
+        Agent2["决策识别专家<br/>Decision Expert"]
+        Agent3["任务提取专家<br/>Task Extractor"]
+        Agent4["说话人观点分析师<br/>Speaker Analyst"]
+        Agent5["会议总结专家<br/>Summary Expert"]
     end
 
-    subgraph "外部服务 External Services"
-        Whisper[OpenAI Whisper API<br/>语音转文本]
-        Diarization[pyannote.audio<br/>说话人识别]
-        GPT4[GPT-4 Turbo<br/>智能分析]
+    subgraph External["外部服务 External Services"]
+        Whisper["OpenAI Whisper API<br/>语音转文本"]
+        Diarization["pyannote.audio<br/>说话人识别"]
+        GPT4["GPT-4 Turbo<br/>智能分析"]
     end
 
-    subgraph "数据存储层 Database"
-        DB[(PostgreSQL)]
-        MeetingTable[MeetingMinute<br/>会议主表]
-        ChapterTable[MeetingChapter<br/>章节表]
-        DecisionTable[KeyDecision<br/>决策表]
-        TodoTable[TodoItem<br/>待办表]
-        SpeakerTable[Speaker<br/>说话人表]
+    subgraph Database["数据存储层 Database"]
+        DB[("PostgreSQL")]
+        MeetingTable["MeetingMinute<br/>会议主表"]
+        ChapterTable["MeetingChapter<br/>章节表"]
+        DecisionTable["KeyDecision<br/>决策表"]
+        TodoTable["TodoItem<br/>待办表"]
+        SpeakerTable["Speaker<br/>说话人表"]
     end
 
     UI --> Upload
     UI --> Display
-    Upload --> Upload_EP
+    Upload --> UploadAPI
     Display --> Router
 
-    Upload_EP --> AudioProc
-    Analyze_EP --> AudioProc
-    Analyze_EP --> EnhancedCrew
-    Minutes_EP --> TemplateEngine
-    Catchup_EP --> EnhancedCrew
+    UploadAPI --> AudioProc
+    AnalyzeAPI --> AudioProc
+    AnalyzeAPI --> EnhancedCrew
+    MinutesAPI --> TemplateEngine
+    CatchupAPI --> EnhancedCrew
 
     AudioProc --> Whisper
     AudioProc --> Diarization
